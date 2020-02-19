@@ -19,7 +19,24 @@ const Poster = ({ focused, setFocus, focusPath, src }) => {
 const FocusablePoster = withFocusable(Poster);
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      items: []
+    };
+  }
+
+  componentDidMount() {
+    fetch("http://jsonplaceholder.typicode.com/photos")
+      .then(res => res.json())
+      .then(data => {
+        this.setState({ items: data });
+      })
+      .catch(console.log);
+  }
+
   render() {
+    console.log(this.state.items);
     return (
       <div>
         <div className="title">
@@ -28,7 +45,7 @@ class App extends React.Component {
           />
         </div>
         <div className="focus-info">
-          You're focused on: {this.props.currentFocusPath}
+          O curso selecionado é: {this.props.currentFocusPath}
         </div>
         <div className="boxSlide">
           <button type="button" class="my-5 btn neumorphic-btn">
